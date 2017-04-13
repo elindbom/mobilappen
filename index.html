@@ -165,6 +165,8 @@
     <div id="map"></div>
     <script>
       var map;
+      var marker;
+
       var newYork = {lat: 40.7564729, lng: -73.9737229};
 
       function ZoomControl(controlDiv, map) {
@@ -290,7 +292,66 @@
         });  
 
       }
+function PositionControl(controlDiv, map) {
 
+        // Set CSS for the control border.
+        var positionButton = document.createElement('div');
+        positionButton.style.backgroundColor = '#fff';
+        positionButton.style.border = '2px solid #fff';
+        positionButton.style.borderRadius = '3px';
+        positionButton.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        positionButton.style.cursor = 'pointer';
+        positionButton.style.marginBottom = '2px';
+        positionButton.style.textAlign = 'center';
+        //positionButton.style.width = '32px'; 
+        //positionButton.style.height = '32px';
+        positionButton.title = 'Click to get your position';
+        controlDiv.appendChild(positionButton);
+
+        // Set CSS for the control interior.
+        var positionButton_text = document.createElement('div');
+        positionButton_text.style.color = 'rgb(25,25,25)';
+        positionButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        positionButton_text.style.fontSize = '16px';
+        positionButton_text.style.lineHeight = '38px';
+        positionButton_text.style.paddingLeft = '5px';
+        positionButton_text.style.paddingRight = '5px';
+        positionButton_text.innerHTML = 'Your position';
+        positionButton.appendChild(positionButton_text);
+ 
+        // Setup the click event listeners: simply set the map to Chicago.
+        google.maps.event.addDomListener(positionButton, 'click', function() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 17,
+                mapTypeId: 'hybrid',
+                center: {lat: 59.326520, lng: 18.070707}
+            });
+
+            marker = new google.maps.Marker({
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: {lat: 59.326520, lng: 18.070707}
+            });
+            marker.addListener('click', toggleBounce);
+        });
+
+        function toggleBounce() {
+          if (marker.getAnimation() !== null) {
+            marker.setAnimation(null);
+          } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
+        function drop() {
+            for (var i =0; i < markerArray.length; i++) {
+                setTimeout(function() {
+                addMarkerMethod();
+            }, i * 200);
+        }
+    }
+      }
+        }
+      
 
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -315,8 +376,13 @@
         mapControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.LEFT_TOP].push(mapControlDiv);
 
+        var positionControlDiv = document.createElement('div');
+        var positionControl = new PositionControl(positionControlDiv, map);
 
-      }
+        positionControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(positionControlDiv);
+}
+
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsAAwkCzlk62xCn9hxLRA3qmNjkKbSfeE&callback=initMap">
