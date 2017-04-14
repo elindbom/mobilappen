@@ -192,6 +192,7 @@
         var zoomInButton_text = document.createElement('div');
         zoomInButton_text.style.color = 'rgb(25,25,25)';
         zoomInButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        zoomInButton_text.style.fontWeight="bold";
         zoomInButton_text.style.fontSize = '16px';
         zoomInButton_text.style.lineHeight = '38px';
         zoomInButton_text.style.paddingLeft = '5px';
@@ -217,6 +218,7 @@
         var zoomOutButton_text = document.createElement('div');
         zoomOutButton_text.style.color = 'rgb(25,25,25)';
         zoomOutButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        zoomOutButton_text.style.fontWeight="bold";
         zoomOutButton_text.style.fontSize = '16px';
         zoomOutButton_text.style.lineHeight = '38px';
         zoomOutButton_text.style.paddingLeft = '5px';
@@ -240,8 +242,8 @@
 
         // Set CSS for the control border.
         var mapTypeButton_satellite = document.createElement('div');
-        mapTypeButton_satellite.style.backgroundColor = 'rgb(255, 252, 169)';
-        mapTypeButton_satellite.style.border = '2px solid red';
+        mapTypeButton_satellite.style.backgroundColor = '#fff';
+        mapTypeButton_satellite.style.border = '2px solid #fff';
         mapTypeButton_satellite.style.borderRadius = '3px';
         mapTypeButton_satellite.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         mapTypeButton_satellite.style.cursor = 'pointer';
@@ -254,6 +256,7 @@
         var mapTypeButton_satellite_text = document.createElement('div');
         mapTypeButton_satellite_text.style.color = 'rgb(25,25,25)';
         mapTypeButton_satellite_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        mapTypeButton_satellite_text.style.fontWeight="bold";
         mapTypeButton_satellite_text.style.fontSize = '16px';
         mapTypeButton_satellite_text.style.lineHeight = '38px';
         mapTypeButton_satellite_text.style.paddingLeft = '5px';
@@ -263,8 +266,8 @@
 
 
         var mapTypeButton_hybrid = document.createElement('div');
-        mapTypeButton_hybrid.style.backgroundColor = 'rgb(255, 252, 169)';
-        mapTypeButton_hybrid.style.border = '2px solid rgb(10, 47, 255)';
+        mapTypeButton_hybrid.style.backgroundColor = '#fff';
+        mapTypeButton_hybrid.style.border = '2px solid #fff';
         mapTypeButton_hybrid.style.borderRadius = '3px';
         mapTypeButton_hybrid.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         mapTypeButton_hybrid.style.cursor = 'pointer';
@@ -277,6 +280,7 @@
         var mapTypeButton_hybrid_text = document.createElement('div');
         mapTypeButton_hybrid_text.style.color = 'rgb(25,25,25)';
         mapTypeButton_hybrid_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        mapTypeButton_hybrid_text.style.fontWeight="bold";
         mapTypeButton_hybrid_text.style.fontSize = '16px';
         mapTypeButton_hybrid_text.style.lineHeight = '38px';
         mapTypeButton_hybrid_text.style.paddingLeft = '5px';
@@ -315,6 +319,7 @@ function PositionControl(controlDiv, map) {
         var positionButton_text = document.createElement('div');
         positionButton_text.style.color = 'rgb(25,25,25)';
         positionButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        positionButton_text.style.fontWeight="bold";
         positionButton_text.style.fontSize = '16px';
         positionButton_text.style.lineHeight = '38px';
         positionButton_text.style.paddingLeft = '5px';
@@ -325,38 +330,81 @@ function PositionControl(controlDiv, map) {
         // Setup the click event listeners: simply set the map to Chicago.
         google.maps.event.addDomListener(positionButton, 'click', function(e) {
           infoWindow = new google.maps.InfoWindow;
+          // Try HTML5 geolocation.
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+              infoWindow.setPosition(pos);
+              infoWindow.setContent('You are here');
+              infoWindow.open(map);
+              map.setCenter(pos);
+            }, function() {
+              handleLocationError(true, infoWindow, map.getCenter());
+            });
+          } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+          }
+        });
 
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(browserHasGeolocation ?
+                                'Error: The Geolocation service failed.' :
+                                'Error: Your browser doesn\'t support geolocation.');
+          infoWindow.open(map);        
+        };
+      }
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-      });
+      function LocationControl(controlDiv, map) {
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      
-      
-      };
-    }
+        // Set CSS for the control border.
+        var locationButton = document.createElement('div');
+        locationButton.style.backgroundColor = '#fff';
+        locationButton.style.border = '2px solid #fff';
+        locationButton.style.borderRadius = '3px';
+        locationButton.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        locationButton.style.cursor = 'pointer';
+        locationButton.style.marginBottom = '2px';
+        locationButton.style.textAlign = 'center';
+        //locationButton.style.width = '32px'; 
+        //locationButton.style.height = '32px';
+        locationButton.title = 'Click to get your position';
+        controlDiv.appendChild(locationButton);
+
+        // Set CSS for the control interior.
+        var locationButton_text = document.createElement('div');
+        locationButton_text.style.color = 'rgb(25,25,25)';
+        locationButton_text.style.fontFamily = 'Roboto,Arial,sans-serif';
+        locationButton_text.style.fontWeight="bold";
+        locationButton_text.style.fontSize = '16px';
+        locationButton_text.style.lineHeight = '38px';
+        locationButton_text.style.paddingLeft = '5px';
+        locationButton_text.style.paddingRight = '5px';
+        locationButton_text.innerHTML = 'Slottet';
+        locationButton.appendChild(locationButton_text);
+ 
+        // Setup the click event listeners: simply set the map to Chicago.
+        google.maps.event.addDomListener(locationButton, 'click', function(e) {
+          infoWindow = new google.maps.InfoWindow;
+              var pos = slottet;
+              infoWindow.setPosition(pos);
+              infoWindow.setContent('Stockholms slott');
+              infoWindow.open(map);
+              map.setCenter(pos);
+        });
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+          infoWindow.setPosition(pos);
+          infoWindow.setContent(browserHasGeolocation ?
+                                'Error: The Geolocation service failed.' :
+                                'Error: Your browser doesn\'t support geolocation.');
+          infoWindow.open(map);        
+        };
+      }
       
 
       function initMap() {
@@ -387,6 +435,12 @@ function PositionControl(controlDiv, map) {
 
         positionControlDiv.index = 1;
         map.controls[google.maps.ControlPosition.RIGHT_TOP].push(positionControlDiv);
+
+        var locationControlDiv = document.createElement('div');
+        var locationControl = new LocationControl(locationControlDiv, map);
+
+        locationControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(locationControlDiv);
 }
 
     </script>
