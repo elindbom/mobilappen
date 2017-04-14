@@ -428,19 +428,19 @@ function PositionControl(controlDiv, map) {
         var mapControl = new MapTypeControl(mapControlDiv, map);
 
         mapControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.LEFT_TOP].push(mapControlDiv);
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(mapControlDiv);
 
         var positionControlDiv = document.createElement('div');
         var positionControl = new PositionControl(positionControlDiv, map);
 
         positionControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(positionControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(positionControlDiv);
 
         var locationControlDiv = document.createElement('div');
         var locationControl = new LocationControl(locationControlDiv, map);
 
         locationControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(locationControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationControlDiv);
 }
 
     </script>
