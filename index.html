@@ -37,7 +37,7 @@
 
     <!-- Make the app title different than the page title. -->
     <meta name="apple-mobile-web-app-title"
-          content="iOS 8 web app">
+          content="MobileMap">
 
     <!-- Configure the status bar. -->
     <meta name="apple-mobile-web-app-status-bar-style"
@@ -169,7 +169,7 @@
       var marker;
       var infoWindow;
 
-      var newYork = {lat: 40.7564729, lng: -73.9737229};
+      var newYork = {lat: 40.756969, lng: -73.9852141};
       var slottet = {lat: 59.326520, lng: 18.070707};
 
       function ZoomControl(controlDiv, map) {
@@ -309,6 +309,7 @@ function PositionControl(controlDiv, map) {
         positionButton.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         positionButton.style.cursor = 'pointer';
         positionButton.style.marginBottom = '2px';
+        positionButton.style.marginRight = '2px';
         positionButton.style.textAlign = 'center';
         //positionButton.style.width = '32px'; 
         //positionButton.style.height = '32px';
@@ -369,6 +370,7 @@ function PositionControl(controlDiv, map) {
         locationButton.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
         locationButton.style.cursor = 'pointer';
         locationButton.style.marginBottom = '2px';
+        locationButton.style.marginRight = '2px';
         locationButton.style.textAlign = 'center';
         //locationButton.style.width = '32px'; 
         //locationButton.style.height = '32px';
