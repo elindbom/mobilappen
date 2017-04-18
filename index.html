@@ -430,19 +430,19 @@
         map.controls[google.maps.ControlPosition.BOTTOM].push(panSouthControlDiv);
 
         panNorthControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP].push(panNorthControlDiv);
+        map.controls[google.maps.ControlPosition.BOTTOM].push(panNorthControlDiv);
 
         panEastControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(panEastControlDiv);
+        map.controls[google.maps.ControlPosition.BOTTOM].push(panEastControlDiv);
 
         panWestControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.LEFT_CENTER].push(panWestControlDiv);
+        map.controls[google.maps.ControlPosition.BOTTOM].push(panWestControlDiv);
 
         var positionControlDiv = document.createElement('div');
         PositionControl(positionControlDiv, map);
 
         positionControlDiv.index = 1;
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(positionControlDiv);
+        map.controls[google.maps.ControlPosition.TOP].push(positionControlDiv);
 
         var locationControlDiv = document.createElement('div');
         LocationControl(locationControlDiv, map);
@@ -451,7 +451,7 @@
         draggableMarker.setMap(map);
 
         locationControlDiv.index = 10;
-        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationControlDiv);
+        map.controls[google.maps.ControlPosition.TOP].push(locationControlDiv);
       }
         function toggleBounce() {
         if (draggableMarker.getAnimation() !== null) {
