@@ -31,4 +31,11 @@
 
 .marginright2 {
 	margin-right: 2px;
+	float: right;
+
+}
+
+.panbutton {
+	width: 32px;
+	height: 32px;
 }
